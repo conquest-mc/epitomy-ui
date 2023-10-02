@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'com.github.discordrpc'
+version '0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.papermc.io/repository/maven-public/" }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = 'epitomy-ui'
+            version = version
+
+            from components.java
+        }
+    }
+}

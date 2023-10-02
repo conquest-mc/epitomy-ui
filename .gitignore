@@ -1,0 +1,14 @@
+.idea/modules/
+.idea/shelf/
+.idea/workspace.xml
+.idea/discord.xml
+.idea/gradle.xml
+.idea/usage.statistics.xml
+.idea/uiDesigner.xml
+.idea/libraries/*.xml
+*.iws
+*.iml
+*.ipr
+
+.gradle/
+build/
