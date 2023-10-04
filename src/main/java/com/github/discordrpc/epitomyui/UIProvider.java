@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UIProvider implements Listener {
-    private static final Map<UUID, Gui> uis = new HashMap<>();
+    private static final Map<UUID, GuiBase> uis = new HashMap<>();
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
@@ -26,7 +26,7 @@ public class UIProvider implements Listener {
     public void onClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        final Gui gui = uis.get(player.getUniqueId());
+        final GuiBase gui = uis.get(player.getUniqueId());
         if (gui == null) return;
 
         final boolean cancel = gui.onClick(event);
@@ -42,7 +42,7 @@ public class UIProvider implements Listener {
     public void onDrag(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        final Gui gui = uis.get(player.getUniqueId());
+        final GuiBase gui = uis.get(player.getUniqueId());
         if (gui == null) return;
 
         final boolean cancel = gui.onDrag(event);
@@ -55,7 +55,7 @@ public class UIProvider implements Listener {
         }
     }
 
-    public static void registerUI(UUID uuid, Gui gui) {
+    public static void registerUI(UUID uuid, GuiBase gui) {
         uis.put(uuid, gui);
     }
 }
