@@ -113,6 +113,7 @@ public abstract class Gui extends GuiBase {
      */
     public void setItem(@Nonnegative final int slot, @Nullable final ItemStack item) {
         if (slot >= inventory.getSize()) return;
+        this.interactables.remove(slot);
         this.inventory.setItem(slot, item);
     }
 }
