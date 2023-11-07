@@ -1,6 +1,7 @@
-package com.github.discordrpc.epitomyui;
+package com.github.conquestmc.epitomyui;
 
-import com.github.discordrpc.epitomyui.utils.GuiSerializer;
+import com.github.conquestmc.epitomyui.items.GuiItem;
+import com.github.conquestmc.epitomyui.utils.GuiSerializer;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
