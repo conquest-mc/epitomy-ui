@@ -1,6 +1,5 @@
 package com.github.conquestmc.epitomyui;
 
-import com.github.conquestmc.epitomyui.items.GuiItem;
 import com.github.conquestmc.epitomyui.items.GuiInteractable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -74,7 +73,7 @@ public abstract class GuiBase implements InventoryHolder {
     }
 
     /**
-     * @return The interactable {@link GuiItem}s in the Gui
+     * @return The interactable {@link GuiInteractable}s in the Gui
      */
     public @Nonnull Map<Integer, GuiInteractable> getInteractables() {
         return this.interactables;

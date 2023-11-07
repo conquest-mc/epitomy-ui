@@ -137,7 +137,7 @@ public abstract class ScrollingGui extends GuiBase {
      *
      * @param item The item to fill the scroll GUI with
      */
-    public void fill(@Nonnull final GuiItem item) {
+    public void fill(@Nonnull final GuiInteractable item) {
         for (int row = 0; row < this.items.length; row++) {
             ItemStack[] items = this.items[row];
             for (int column = 0; column < items.length; column++) {
@@ -166,7 +166,7 @@ public abstract class ScrollingGui extends GuiBase {
      *
      * @param item The item to fill empty slots with
      */
-    public void fillEmpty(@Nonnull final GuiItem item) {
+    public void fillEmpty(@Nonnull final GuiInteractable item) {
         for (int row = 0; row < this.items.length; row++) {
             ItemStack[] items = this.items[row];
             for (int column = 0; column < items.length; column++) {
@@ -273,7 +273,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param slot The slot to set the item at
      * @param item The item to set
      */
-    public void setItem(@Nonnegative final int slot, @Nonnull final GuiItem item) {
+    public void setItem(@Nonnegative final int slot, @Nonnull final GuiInteractable item) {
         this.setItem(getRow(slot), getColumn(slot), item);
     }
 
@@ -284,7 +284,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param column The column to set the item at
      * @param item The item to set
      */
-    public void setItem(@Nonnegative final int row, @Nonnegative final int column, @Nonnull final GuiItem item) {
+    public void setItem(@Nonnegative final int row, @Nonnegative final int column, @Nonnull final GuiInteractable item) {
         this.setItem(row, column, item.getItem());
         if (this.isVisible(row, column)) {
             final int slot = getContextSlotFrom(row, column);
