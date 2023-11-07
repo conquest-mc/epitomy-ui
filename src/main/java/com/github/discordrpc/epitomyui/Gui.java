@@ -10,12 +10,12 @@ import java.util.List;
 
 public abstract class Gui extends GuiBase {
 
-    @SuppressWarnings("deprecation")
+    public Gui(@Nullable final String title, @Nonnegative final int rows) {
     public Gui(String title, @Nonnegative int rows) {
         super(title, rows);
     }
 
-    @SuppressWarnings("deprecation")
+    public Gui(@Nonnull final InventoryType type, @Nullable final String title) {
     public Gui(@Nonnull InventoryType type, String title) {
         super(type, title);
     }
