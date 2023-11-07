@@ -2,6 +2,7 @@ package com.github.discordrpc.epitomyui.scrolling;
 
 import com.github.discordrpc.epitomyui.GuiBase;
 import com.github.discordrpc.epitomyui.items.GuiItem;
+import com.github.discordrpc.epitomyui.items.GuiInteractable;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnegative;
@@ -17,8 +18,8 @@ public abstract class ScrollingGui extends GuiBase {
     private static final Logger LOGGER = Logger.getLogger("epitome-ui");
     private final ItemStack[][] items;
     private final Map<Integer, ScrollHandlerItem> handlers;
-    private final Map<Integer, GuiItem> interactablesStore;
-    private final Map<Integer, GuiItem> stickyItems;
+    private final Map<Integer, GuiInteractable> interactablesStore;
+    private final Map<Integer, GuiInteractable> stickyItems;
     private final int maxRow;
     private final int maxColumn;
     private int row;
@@ -57,7 +58,7 @@ public abstract class ScrollingGui extends GuiBase {
             for (int column = this.column; column < this.column + 9; column++) {
                 contextSlot++;
 
-                GuiItem interactable = null;
+                GuiInteractable interactable = null;
                 if (this.handlers.containsKey(contextSlot)) {
                     ScrollHandlerItem handler = this.handlers.get(contextSlot);
                     switch (handler.getScrollDirection()) {
@@ -256,7 +257,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param slot The context slot (0 - 53) to set the item at
      * @param item The item to set
      */
-    public void setStickyItem(@Nonnegative final int slot, @Nonnull final GuiItem item) {
+    public void setStickyItem(@Nonnegative final int slot, @Nonnull final GuiInteractable item) {
         try {
             if (slot > 53) throw new IndexOutOfBoundsException("Sticky items must have a slot between 0 and 53");
             this.stickyItems.put(slot, item);

@@ -6,8 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -21,12 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public class GuiItem {
-    private ItemStack item;
-    private Consumer<InventoryClickEvent> clickEvent;
-    private Consumer<InventoryDragEvent> dragEvent;
+public class GuiItem extends GuiInteractable {
 
     public GuiItem(@Nonnull final Material material) {
         this(new ItemStack(material));
@@ -37,18 +31,7 @@ public class GuiItem {
     }
 
     public GuiItem(@Nullable final ItemStack item) {
-        this.item = item;
-        this.clickEvent = event -> {};
-        this.dragEvent = event -> {};
-    }
-
-    /**
-     * Sets the item stack.
-     *
-     * @param item The item to set
-     */
-    public void setItem(@Nullable final ItemStack item) {
-        this.item = item;
+        super(item);
     }
 
     /**
@@ -262,44 +245,5 @@ public class GuiItem {
         if (meta == null) return;
         meta.addAttributeModifier(attribute, modifier);
         item.setItemMeta(meta);
-    }
-
-    /**
-     * Called when the item is clicked on.
-     *
-     * @param consumer The method to execute when clicked
-     */
-    public void onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {
-        this.clickEvent = consumer;
-    }
-
-    /**
-     * @return The {@link Consumer} to run on an {@link InventoryClickEvent}
-     */
-    public @Nonnull Consumer<InventoryClickEvent> getClickEvent() {
-        return clickEvent;
-    }
-
-    /**
-     * Called when the item is dragged.
-     *
-     * @param consumer The method to execute on drag
-     */
-    public void onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {
-        this.dragEvent = consumer;
-    }
-
-    /**
-     * @return The {@link Consumer} to run on an {@link InventoryDragEvent}
-     */
-    public @Nonnull Consumer<InventoryDragEvent> getDragEvent() {
-        return dragEvent;
-    }
-
-    /**
-     * @return The {@link ItemStack} belonging to the {@link GuiItem}
-     */
-    public @Nonnull ItemStack getItem() {
-        return item;
     }
 }

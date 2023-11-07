@@ -1,6 +1,7 @@
 package com.github.discordrpc.epitomyui;
 
 import com.github.discordrpc.epitomyui.items.GuiItem;
+import com.github.discordrpc.epitomyui.items.GuiInteractable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 public abstract class GuiBase implements InventoryHolder {
     protected final Inventory inventory;
-    protected final Map<Integer, GuiItem> interactables;
+    protected final Map<Integer, GuiInteractable> interactables;
 
     @SuppressWarnings("deprecation")
     public GuiBase(@Nullable final String title, @Nonnegative int rows) {
@@ -75,7 +76,7 @@ public abstract class GuiBase implements InventoryHolder {
     /**
      * @return The interactable {@link GuiItem}s in the Gui
      */
-    public @Nonnull Map<Integer, GuiItem> getInteractables() {
+    public @Nonnull Map<Integer, GuiInteractable> getInteractables() {
         return this.interactables;
     }
 
