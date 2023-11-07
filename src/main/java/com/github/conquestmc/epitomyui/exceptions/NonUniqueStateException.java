@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui.exceptions;
+package com.github.conquestmc.epitomyui.exceptions;
 
 import javax.annotation.Nonnull;
 

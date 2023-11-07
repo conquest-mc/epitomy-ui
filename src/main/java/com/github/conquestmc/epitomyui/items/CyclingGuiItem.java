@@ -1,6 +1,6 @@
-package com.github.discordrpc.epitomyui.items;
+package com.github.conquestmc.epitomyui.items;
 
-import com.github.discordrpc.epitomyui.exceptions.NonUniqueStateException;
+import com.github.conquestmc.epitomyui.exceptions.NonUniqueStateException;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;

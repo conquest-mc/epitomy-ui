@@ -1,6 +1,6 @@
-package com.github.discordrpc.epitomyui.scrolling;
+package com.github.conquestmc.epitomyui.scrolling;
 
-import com.github.discordrpc.epitomyui.items.GuiItem;
+import com.github.conquestmc.epitomyui.items.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

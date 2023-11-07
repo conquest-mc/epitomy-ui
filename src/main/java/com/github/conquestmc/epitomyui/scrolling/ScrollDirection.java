@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui.scrolling;
+package com.github.conquestmc.epitomyui.scrolling;
 
 public enum ScrollDirection {
     UP,

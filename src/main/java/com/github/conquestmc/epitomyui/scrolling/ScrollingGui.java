@@ -1,8 +1,8 @@
-package com.github.discordrpc.epitomyui.scrolling;
+package com.github.conquestmc.epitomyui.scrolling;
 
-import com.github.discordrpc.epitomyui.GuiBase;
-import com.github.discordrpc.epitomyui.items.GuiItem;
-import com.github.discordrpc.epitomyui.items.GuiInteractable;
+import com.github.conquestmc.epitomyui.GuiBase;
+import com.github.conquestmc.epitomyui.items.GuiInteractable;
+import com.github.conquestmc.epitomyui.items.GuiItem;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnegative;

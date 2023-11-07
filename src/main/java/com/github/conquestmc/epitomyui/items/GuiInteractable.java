@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui.items;
+package com.github.conquestmc.epitomyui.items;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;

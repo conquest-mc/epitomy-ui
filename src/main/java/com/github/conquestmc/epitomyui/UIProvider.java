@@ -1,6 +1,6 @@
-package com.github.discordrpc.epitomyui;
+package com.github.conquestmc.epitomyui;
 
-import com.github.discordrpc.epitomyui.items.GuiInteractable;
+import com.github.conquestmc.epitomyui.items.GuiInteractable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui.utils;
+package com.github.conquestmc.epitomyui.utils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

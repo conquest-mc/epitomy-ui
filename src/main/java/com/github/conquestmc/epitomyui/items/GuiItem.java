@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui.items;
+package com.github.conquestmc.epitomyui.items;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
