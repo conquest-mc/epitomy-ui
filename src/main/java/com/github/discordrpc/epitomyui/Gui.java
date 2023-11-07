@@ -1,6 +1,7 @@
 package com.github.discordrpc.epitomyui;
 
 import com.github.discordrpc.epitomyui.utils.GuiSerializer;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,6 +54,15 @@ public abstract class Gui extends GuiBase {
             this.interactables.put(slot, item);
             this.inventory.setItem(slot, item.getItem());
         }
+    }
+
+    /**
+     * Fills all empty slots in the inventory with the given material.
+     *
+     * @param material The material to fill the empty slots with
+     */
+    public void fillEmpty(@Nonnull final Material material) {
+        fillEmpty(new ItemStack(material));
     }
 
     /**
