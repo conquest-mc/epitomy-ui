@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class GuiItem {
-    private final ItemStack item;
+    private ItemStack item;
     private Consumer<InventoryClickEvent> clickEvent;
     private Consumer<InventoryDragEvent> dragEvent;
 
@@ -40,6 +41,26 @@ public class GuiItem {
         this.item = item;
         this.clickEvent = event -> {};
         this.dragEvent = event -> {};
+    }
+
+    /**
+     * Sets the item stack.
+     *
+     * @param item The item to set
+     */
+    public @Nonnull GuiItem setItem(@Nullable final ItemStack item) {
+        this.item = item;
+        return this;
+    }
+
+    /**
+     * Sets the item material type.
+     *
+     * @param material The material to set
+     */
+    public @Nonnull GuiItem setMaterial(@Nonnull final Material material) {
+        this.item.setType(material);
+        return this;
     }
 
     /**
