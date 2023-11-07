@@ -47,9 +47,8 @@ public class GuiItem {
      *
      * @param item The item to set
      */
-    public @Nonnull GuiItem setItem(@Nullable final ItemStack item) {
+    public void setItem(@Nullable final ItemStack item) {
         this.item = item;
-        return this;
     }
 
     /**
@@ -57,9 +56,8 @@ public class GuiItem {
      *
      * @param material The material to set
      */
-    public @Nonnull GuiItem setMaterial(@Nonnull final Material material) {
+    public void setMaterial(@Nonnull final Material material) {
         this.item.setType(material);
-        return this;
     }
 
     /**
@@ -67,67 +65,60 @@ public class GuiItem {
      *
      * @param name The name to set
      */
-    public @Nonnull GuiItem setName(@Nonnull final String name) {
+    public void setName(@Nonnull final String name) {
         final Component component = MiniMessage.miniMessage().deserialize(name);
-        return setName(component);
+        setName(component);
     }
 
     /**
      * Sets the item display name.
      *
      * @param name The name to set
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setName(@Nonnull final Component name) {
+    public void setName(@Nonnull final Component name) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         meta.displayName(name);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Sets the item lore.
      *
      * @param lines The lines of lore to set
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setLore(@Nonnull final Component... lines) {
-        return setLore(Arrays.asList(lines));
+    public void setLore(@Nonnull final Component... lines) {
+        setLore(Arrays.asList(lines));
     }
 
     /**
      * Sets the item lore.
      *
      * @param lines The lines of lore to set
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setLore(@Nullable final List<Component> lines) {
+    public void setLore(@Nullable final List<Component> lines) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         meta.lore(lines);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Appends lines to the item lore.
      *
      * @param lines The lines to append
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(@Nonnull final Component... lines) {
-        return addLore(Integer.MAX_VALUE, Arrays.asList(lines));
+    public void addLore(@Nonnull final Component... lines) {
+        addLore(Integer.MAX_VALUE, Arrays.asList(lines));
     }
 
     /**
      * Appends lines to the item lore.
      *
      * @param lines The lines to append
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(@Nonnull final List<Component> lines) {
-        return addLore(Integer.MAX_VALUE, lines);
+    public void addLore(@Nonnull final List<Component> lines) {
+        addLore(Integer.MAX_VALUE, lines);
     }
 
     /**
@@ -135,10 +126,9 @@ public class GuiItem {
      *
      * @param line The line to add new lore at
      * @param lines The lines to add
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(@Nonnegative int line, @Nonnull final Component... lines) {
-        return addLore(line, Arrays.asList(lines));
+    public void addLore(@Nonnegative int line, @Nonnull final Component... lines) {
+        addLore(line, Arrays.asList(lines));
     }
 
     /**
@@ -146,91 +136,79 @@ public class GuiItem {
      *
      * @param line The line to add new lore at
      * @param lines The lines to add
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(@Nonnegative int line, @Nonnull final List<Component> lines) {
+    public void addLore(@Nonnegative int line, @Nonnull final List<Component> lines) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         List<Component> lore = meta.lore();
         if (lore == null) lore = new ArrayList<>();
         if (line > lore.size() - 1) line = lore.size() - 1;
         lore.addAll(line, lines);
         meta.lore(lore);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Sets the amount of items in the {@link ItemStack}.
      *
      * @param amount The amount of items
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setAmount(@Nonnegative final int amount) {
+    public void setAmount(@Nonnegative final int amount) {
         item.setAmount(amount);
-        return this;
     }
 
     /**
      * Sets the durability of the items in the {@link ItemStack}.
      *
      * @param durability The durability of the items
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setDurability(@Nonnegative final int durability) {
-        return setDurability((short) durability);
+    public void setDurability(@Nonnegative final int durability) {
+        setDurability((short) durability);
     }
 
     /**
      * Sets the durability of the items in the {@link ItemStack}.
      *
      * @param durability The durability of the items
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setDurability(@Nonnegative short durability) {
+    public void setDurability(@Nonnegative short durability) {
         final ItemMeta meta = item.getItemMeta();
-        if (!(meta instanceof Damageable damageable)) return this;
+        if (!(meta instanceof Damageable damageable)) return;
         if (durability > item.getType().getMaxDurability()) durability = item.getType().getMaxDurability();
         damageable.setDamage(durability);
         item.setItemMeta(damageable);
-        return this;
     }
 
     /**
      * Hides the given flags on the item.
      *
      * @param flags The flags to hide
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem hideFlags(@Nonnull final List<ItemFlag> flags) {
-        return hideFlags(flags.toArray(new ItemFlag[0]));
+    public void hideFlags(@Nonnull final List<ItemFlag> flags) {
+        hideFlags(flags.toArray(new ItemFlag[0]));
     }
 
     /**
      * Hides the given flags on the item.
      *
      * @param flags The flags to hide
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem hideFlags(@Nonnull final ItemFlag... flags) {
+    public void hideFlags(@Nonnull final ItemFlag... flags) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         meta.addItemFlags(flags);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Applies the given enchantments to the item.
      *
      * @param enchantments The enchantments to apply
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem enchant(@Nonnull final Map<Enchantment, Integer> enchantments) {
+    public void enchant(@Nonnull final Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             enchant(entry.getKey(), entry.getValue());
         }
-        return this;
     }
 
     /**
@@ -238,45 +216,39 @@ public class GuiItem {
      *
      * @param enchantment The enchantment to apply
      * @param level The level of the enchantment to apply
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem enchant(@Nonnull final Enchantment enchantment, @Nonnegative final int level) {
+    public void enchant(@Nonnull final Enchantment enchantment, @Nonnegative final int level) {
         if (item.getType() == Material.ENCHANTED_BOOK) {
             final EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-            if (meta == null) return this;
+            if (meta == null) return;
             meta.addStoredEnchant(enchantment, level, true);
             item.setItemMeta(meta);
         } else {
             item.addUnsafeEnchantment(enchantment, level);
         }
-        return this;
     }
 
     /**
      * Sets the unbreakable tag on the item.
      *
      * @param unbreakable Should the item be unbreakable or not
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setUnbreakable(final boolean unbreakable) {
+    public void setUnbreakable(final boolean unbreakable) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         meta.setUnbreakable(unbreakable);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Adds the given attribute modifiers to the item.
      *
      * @param modifiers The modifiers to add
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addAttributeModifiers(@Nonnull final Map<Attribute, AttributeModifier> modifiers) {
+    public void addAttributeModifiers(@Nonnull final Map<Attribute, AttributeModifier> modifiers) {
         for (Map.Entry<Attribute, AttributeModifier> entry : modifiers.entrySet()) {
             addAttributeModifier(entry.getKey(), entry.getValue());
         }
-        return this;
     }
 
     /**
@@ -285,23 +257,20 @@ public class GuiItem {
      * @param attribute The attribute to add
      * @param modifier The modifier to add
      */
-    public @Nonnull GuiItem addAttributeModifier(@Nonnull final Attribute attribute, @Nonnull final AttributeModifier modifier) {
+    public void addAttributeModifier(@Nonnull final Attribute attribute, @Nonnull final AttributeModifier modifier) {
         final ItemMeta meta = item.getItemMeta();
-        if (meta == null) return this;
+        if (meta == null) return;
         meta.addAttributeModifier(attribute, modifier);
         item.setItemMeta(meta);
-        return this;
     }
 
     /**
      * Called when the item is clicked on.
      *
      * @param consumer The method to execute when clicked
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {
+    public void onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {
         this.clickEvent = consumer;
-        return this;
     }
 
     /**
@@ -315,11 +284,9 @@ public class GuiItem {
      * Called when the item is dragged.
      *
      * @param consumer The method to execute on drag
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {
+    public void onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {
         this.dragEvent = consumer;
-        return this;
     }
 
     /**
