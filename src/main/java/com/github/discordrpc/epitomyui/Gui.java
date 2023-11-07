@@ -1,5 +1,6 @@
 package com.github.discordrpc.epitomyui;
 
+import com.github.discordrpc.epitomyui.items.GuiItem;
 import com.github.discordrpc.epitomyui.utils.GuiSerializer;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;

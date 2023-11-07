@@ -1,4 +1,4 @@
-package com.github.discordrpc.epitomyui;
+package com.github.discordrpc.epitomyui.items;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,15 +28,15 @@ public class GuiItem {
     private Consumer<InventoryClickEvent> clickEvent;
     private Consumer<InventoryDragEvent> dragEvent;
 
-    public GuiItem(final Material material) {
+    public GuiItem(@Nonnull final Material material) {
         this(new ItemStack(material));
     }
 
-    public GuiItem(final Material material, final int amount) {
+    public GuiItem(@Nonnull final Material material, final int amount) {
         this(new ItemStack(material, amount));
     }
 
-    public GuiItem(ItemStack item) {
+    public GuiItem(@Nullable final ItemStack item) {
         this.item = item;
         this.clickEvent = event -> {};
         this.dragEvent = event -> {};
@@ -93,7 +92,7 @@ public class GuiItem {
      * @param lines The lines of lore to set
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setLore(final Component ...lines) {
+    public @Nonnull GuiItem setLore(@Nonnull final Component... lines) {
         return setLore(Arrays.asList(lines));
     }
 
@@ -103,7 +102,7 @@ public class GuiItem {
      * @param lines The lines of lore to set
      * @return The {@link GuiItem} instance
      */
-    public @NotNull GuiItem setLore(@NotNull final List<Component> lines) {
+    public @Nonnull GuiItem setLore(@Nullable final List<Component> lines) {
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) return this;
         meta.lore(lines);
@@ -117,7 +116,7 @@ public class GuiItem {
      * @param lines The lines to append
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(final Component ...lines) {
+    public @Nonnull GuiItem addLore(@Nonnull final Component... lines) {
         return addLore(Integer.MAX_VALUE, Arrays.asList(lines));
     }
 
@@ -138,7 +137,7 @@ public class GuiItem {
      * @param lines The lines to add
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addLore(@Nonnegative int line, final Component ...lines) {
+    public @Nonnull GuiItem addLore(@Nonnegative int line, @Nonnull final Component... lines) {
         return addLore(line, Arrays.asList(lines));
     }
 
@@ -167,7 +166,7 @@ public class GuiItem {
      * @param amount The amount of items
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem setAmount(final int amount) {
+    public @Nonnull GuiItem setAmount(@Nonnegative final int amount) {
         item.setAmount(amount);
         return this;
     }
@@ -203,7 +202,7 @@ public class GuiItem {
      * @param flags The flags to hide
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem hideFlags(List<ItemFlag> flags) {
+    public @Nonnull GuiItem hideFlags(@Nonnull final List<ItemFlag> flags) {
         return hideFlags(flags.toArray(new ItemFlag[0]));
     }
 
@@ -213,7 +212,7 @@ public class GuiItem {
      * @param flags The flags to hide
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem hideFlags(ItemFlag ...flags) {
+    public @Nonnull GuiItem hideFlags(@Nonnull final ItemFlag... flags) {
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) return this;
         meta.addItemFlags(flags);
@@ -227,7 +226,7 @@ public class GuiItem {
      * @param enchantments The enchantments to apply
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem enchant(Map<Enchantment, Integer> enchantments) {
+    public @Nonnull GuiItem enchant(@Nonnull final Map<Enchantment, Integer> enchantments) {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             enchant(entry.getKey(), entry.getValue());
         }
@@ -241,7 +240,7 @@ public class GuiItem {
      * @param level The level of the enchantment to apply
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem enchant(final Enchantment enchantment, final int level) {
+    public @Nonnull GuiItem enchant(@Nonnull final Enchantment enchantment, @Nonnegative final int level) {
         if (item.getType() == Material.ENCHANTED_BOOK) {
             final EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
             if (meta == null) return this;
@@ -273,7 +272,7 @@ public class GuiItem {
      * @param modifiers The modifiers to add
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addAttributeModifiers(Map<Attribute, AttributeModifier> modifiers) {
+    public @Nonnull GuiItem addAttributeModifiers(@Nonnull final Map<Attribute, AttributeModifier> modifiers) {
         for (Map.Entry<Attribute, AttributeModifier> entry : modifiers.entrySet()) {
             addAttributeModifier(entry.getKey(), entry.getValue());
         }
@@ -285,9 +284,8 @@ public class GuiItem {
      *
      * @param attribute The attribute to add
      * @param modifier The modifier to add
-     * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem addAttributeModifier(@Nonnull Attribute attribute, @Nonnull AttributeModifier modifier) {
+    public @Nonnull GuiItem addAttributeModifier(@Nonnull final Attribute attribute, @Nonnull final AttributeModifier modifier) {
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) return this;
         meta.addAttributeModifier(attribute, modifier);
@@ -301,11 +299,14 @@ public class GuiItem {
      * @param consumer The method to execute when clicked
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem onClick(Consumer<InventoryClickEvent> consumer) {
+    public @Nonnull GuiItem onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {
         this.clickEvent = consumer;
         return this;
     }
 
+    /**
+     * @return The {@link Consumer} to run on an {@link InventoryClickEvent}
+     */
     public @Nonnull Consumer<InventoryClickEvent> getClickEvent() {
         return clickEvent;
     }
@@ -316,15 +317,21 @@ public class GuiItem {
      * @param consumer The method to execute on drag
      * @return The {@link GuiItem} instance
      */
-    public @Nonnull GuiItem onDrag(Consumer<InventoryDragEvent> consumer) {
+    public @Nonnull GuiItem onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {
         this.dragEvent = consumer;
         return this;
     }
 
+    /**
+     * @return The {@link Consumer} to run on an {@link InventoryDragEvent}
+     */
     public @Nonnull Consumer<InventoryDragEvent> getDragEvent() {
         return dragEvent;
     }
 
+    /**
+     * @return The {@link ItemStack} belonging to the {@link GuiItem}
+     */
     public @Nonnull ItemStack getItem() {
         return item;
     }

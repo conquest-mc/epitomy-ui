@@ -1,5 +1,6 @@
 package com.github.discordrpc.epitomyui;
 
+import com.github.discordrpc.epitomyui.items.GuiItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
