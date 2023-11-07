@@ -1,7 +1,7 @@
-package com.github.discordrpc.epitomyui.pagination;
+package com.github.discordrpc.epitomyui.scrolling;
 
 import com.github.discordrpc.epitomyui.GuiBase;
-import com.github.discordrpc.epitomyui.GuiItem;
+import com.github.discordrpc.epitomyui.items.GuiItem;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnegative;
@@ -10,10 +10,13 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class ScrollingGui extends GuiBase {
+    private static final Logger LOGGER = Logger.getLogger("epitome-ui");
     private final ItemStack[][] items;
-    private final Map<Integer, ScrollItem> handlers;
+    private final Map<Integer, ScrollHandlerItem> handlers;
     private final Map<Integer, GuiItem> interactablesStore;
     private final Map<Integer, GuiItem> stickyItems;
     private final int maxRow;
@@ -22,7 +25,7 @@ public abstract class ScrollingGui extends GuiBase {
     private int column;
 
     public ScrollingGui(
-            final String title,
+            @Nullable final String title,
             @Nonnegative int rows,
             @Nonnegative int columns,
             @Nonnegative final int rowStart,
@@ -56,7 +59,7 @@ public abstract class ScrollingGui extends GuiBase {
 
                 GuiItem interactable = null;
                 if (this.handlers.containsKey(contextSlot)) {
-                    ScrollItem handler = this.handlers.get(contextSlot);
+                    ScrollHandlerItem handler = this.handlers.get(contextSlot);
                     switch (handler.getScrollDirection()) {
                         case UP -> { if (this.row != 0) interactable = handler; }
                         case DOWN -> { if (this.row != this.maxRow) interactable = handler; }
@@ -197,7 +200,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param direction The scroll direction of the handler
      */
     public void setScrollHandler(@Nonnegative final int slot, @Nonnull final ItemStack item, @Nonnull final ScrollDirection direction) {
-        this.setScrollHandler(slot, new ScrollItem(direction, item));
+        this.setScrollHandler(slot, new ScrollHandlerItem(direction, item));
     }
 
     /**
@@ -206,7 +209,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param slot The inventory slot to set the handler at
      * @param item The handler item
      */
-    public void setScrollHandler(@Nonnegative final int slot, @Nonnull final ScrollItem item) {
+    public void setScrollHandler(@Nonnegative final int slot, @Nonnull final ScrollHandlerItem item) {
         if (slot > 53) throw new IndexOutOfBoundsException("Scroll handler must have a slot between 0 and 53");
 
         switch (item.getScrollDirection()) {
@@ -254,9 +257,13 @@ public abstract class ScrollingGui extends GuiBase {
      * @param item The item to set
      */
     public void setStickyItem(@Nonnegative final int slot, @Nonnull final GuiItem item) {
-        if (slot > 53) throw new IndexOutOfBoundsException("Sticky items must have a slot between 0 and 53");
-        this.stickyItems.put(slot, item);
-        this.updateInventory();
+        try {
+            if (slot > 53) throw new IndexOutOfBoundsException("Sticky items must have a slot between 0 and 53");
+            this.stickyItems.put(slot, item);
+            this.updateInventory();
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.log(Level.SEVERE, "Could not a stick item to the ScrollingGui", e);
+        }
     }
 
     /**
@@ -298,14 +305,10 @@ public abstract class ScrollingGui extends GuiBase {
     }
 
     public void setItem(@Nonnegative final int row, @Nonnegative final int column, @Nullable final ItemStack item) {
-        try {
-            this.items[row][column] = item;
-            if (!this.isVisible(row, column)) return;
-            final int slot = this.getContextSlotFrom(row, column);
-            this.inventory.setItem(slot, item);
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+        this.items[row][column] = item;
+        if (!this.isVisible(row, column)) return;
+        final int slot = this.getContextSlotFrom(row, column);
+        this.inventory.setItem(slot, item);
     }
 
     /**
