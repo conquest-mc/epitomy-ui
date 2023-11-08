@@ -86,11 +86,6 @@ public class CyclingGuiItem extends GuiInteractable {
             this.state.getClickEvent().accept(event);
             this.nextState();
         });
-        super.onDrag(event -> {
-            event.setCancelled(true);
-            this.state.getDragEvent().accept(event);
-            this.nextState();
-        });
     }
 
     /**
@@ -130,7 +125,6 @@ public class CyclingGuiItem extends GuiInteractable {
             super(item.getItem());
             this.id = id;
             this.onClick(item.getClickEvent());
-            this.onDrag(item.getDragEvent());
         }
 
         /**
@@ -143,7 +137,4 @@ public class CyclingGuiItem extends GuiInteractable {
 
     @Override
     public void onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {}
-
-    @Override
-    public void onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {}
 }

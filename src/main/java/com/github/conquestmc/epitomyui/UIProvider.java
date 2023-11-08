@@ -49,24 +49,6 @@ public class UIProvider implements Listener {
         gui.getInventory().setItem(slot, newStack);
     }
 
-    @EventHandler
-    public void onDrag(InventoryDragEvent event) {
-        if (!(event.getWhoClicked() instanceof Player player)) return;
-
-        final GuiBase gui = uis.get(player.getUniqueId());
-        if (gui == null) return;
-
-        final boolean cancel = gui.onDrag(event);
-        event.setCancelled(cancel);
-
-        final Map<Integer, ItemStack> newItems = event.getNewItems();
-        for (final int slot : event.getRawSlots()) {
-            GuiInteractable item = gui.getInteractables().get(slot);
-            if (item == null) return;
-            item.getDragEvent().accept(event);
-        }
-    }
-
     public static void registerUI(UUID uuid, GuiBase gui) {
         uis.put(uuid, gui);
     }

@@ -10,12 +10,10 @@ import java.util.function.Consumer;
 
 public class GuiInteractable {
     protected ItemStack item;
-    private Consumer<InventoryClickEvent> clickEvent;
-    private Consumer<InventoryDragEvent> dragEvent;
+    protected Consumer<InventoryClickEvent> clickEvent;
 
     public GuiInteractable() {
         this.clickEvent = event -> {};
-        this.dragEvent = event -> {};
     }
 
     public GuiInteractable(@Nullable final ItemStack item) {
@@ -44,21 +42,5 @@ public class GuiInteractable {
      */
     public @Nonnull Consumer<InventoryClickEvent> getClickEvent() {
         return this.clickEvent;
-    }
-
-    /**
-     * Called when the item is dragged.
-     *
-     * @param consumer The method to execute when dragged
-     */
-    public void onDrag(@Nonnull final Consumer<InventoryDragEvent> consumer) {
-        this.dragEvent = consumer;
-    }
-
-    /**
-     * @return The {@link Consumer} to run on an {@link InventoryDragEvent}
-     */
-    public @Nonnull Consumer<InventoryDragEvent> getDragEvent() {
-        return this.dragEvent;
     }
 }
