@@ -1,9 +1,11 @@
 package com.github.conquestmc.epitomyui.items;
 
+import com.github.conquestmc.epitomyui.events.CyclingGuiItemStateChangeEvent;
 import com.github.conquestmc.epitomyui.exceptions.NonUniqueStateException;
+import com.github.conquestmc.epitomyui.utils.Logging;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnegative;
@@ -14,10 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class CyclingGuiItem extends GuiInteractable {
-    private static final Logger LOGGER = Logger.getLogger("epitome-ui");
     private final HashMap<String, State> states;
     private State state;
 
@@ -47,7 +48,7 @@ public class CyclingGuiItem extends GuiInteractable {
                 this.states.put(id, state);
             }
         } catch (NonUniqueStateException e) {
-            LOGGER.log(Level.SEVERE, "Could not add State to DynamicGuiItem", e);
+            Logging.LOGGER.log(Level.SEVERE, "Could not add State to CyclingGuiItem", e);
         }
     }
 
@@ -56,18 +57,20 @@ public class CyclingGuiItem extends GuiInteractable {
      * {@link State}s
      */
     public void nextState() {
-        boolean next = false;
-        final List<State> states = new ArrayList<>(this.states.values());
-        for (final State state : states) {
-            if (next) {
-                this.setState(state.getStateId());
-                return;
-            }
-            else if (state.getStateId().equals(this.state.getStateId())) {
-                next = true;
-            }
-        }
-        if (!states.isEmpty()) this.setState(states.get(0).getStateId());
+        final State nextState = this.getNextState();
+        if (nextState != null) this.setState(nextState);
+    }
+
+    /**
+     * Sets the current state to the given {@link State}.
+     * If the state does not exist on the current
+     * {@link CyclingGuiItem}, it is added first.
+     *
+     * @param state The state to set
+     */
+    public void setState(@Nonnull final State state) {
+        if (!this.states.containsKey(state.getStateId())) this.addState(state);
+        this.setState(state.getStateId());
     }
 
     /**
@@ -81,11 +84,6 @@ public class CyclingGuiItem extends GuiInteractable {
         final State state = this.states.get(stateId);
         this.state = state;
         this.item = state.getItem();
-        super.onClick(event -> {
-            event.setCancelled(true);
-            this.state.getClickEvent().accept(event);
-            this.nextState();
-        });
     }
 
     /**
@@ -105,8 +103,27 @@ public class CyclingGuiItem extends GuiInteractable {
         return this.states.get(id);
     }
 
+    /**
+     * @return The next {@link State} in the list of available {@link State}s
+     */
+    public @Nullable State getNextState() {
+        boolean next = false;
+        final List<State> states = new ArrayList<>(this.states.values());
+        for (final State state : states) {
+            if (next) {
+                return state;
+            }
+            else if (state.getStateId().equals(this.state.getStateId())) {
+                next = true;
+            }
+        }
+        if (!states.isEmpty()) return states.get(0);
+        else return null;
+    }
+
     public static class State extends GuiItem {
         private final String id;
+        private Consumer<CyclingGuiItemStateChangeEvent> changeEvent;
 
         public State(@Nonnull final String id, @Nonnull final Material material) {
             this(id, new ItemStack(material));
@@ -119,6 +136,7 @@ public class CyclingGuiItem extends GuiInteractable {
         public State(@Nonnull final String id, @Nullable final ItemStack item) {
             super(item);
             this.id = id;
+            this.changeEvent = event -> {};
         }
 
         public State(@Nonnull final String id, @Nonnull final GuiItem item) {
@@ -133,8 +151,30 @@ public class CyclingGuiItem extends GuiInteractable {
         public String getStateId() {
             return this.id;
         }
+
+        public void onChange(@Nonnull final Consumer<CyclingGuiItemStateChangeEvent> consumer) {
+            this.changeEvent = consumer;
+        }
+
+        public Consumer<CyclingGuiItemStateChangeEvent> getChangeEvent() {
+            return this.changeEvent;
+        }
     }
 
     @Override
-    public void onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {}
+    public void onClick(@Nonnull final Consumer<InventoryClickEvent> consumer) {
+        this.clickEvent = event -> {
+            State newState = this.getNextState();
+            if (newState == null) newState = this.state;
+
+            final CyclingGuiItemStateChangeEvent changeEvent = new CyclingGuiItemStateChangeEvent(this, this.state, newState);
+            this.state.clickEvent.accept(event);
+            this.state.changeEvent.accept(changeEvent);
+            Bukkit.getPluginManager().callEvent(changeEvent);
+
+            if (!changeEvent.isCancelled()) this.setState(changeEvent.getNewState());
+
+            consumer.accept(event);
+        };
+    }
 }

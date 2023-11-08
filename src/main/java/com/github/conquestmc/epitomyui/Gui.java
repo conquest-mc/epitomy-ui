@@ -97,6 +97,7 @@ public abstract class Gui extends GuiBase {
      * @param slot The slot to set
      * @param item The item to set
      */
+    @Override
     public void setItem(@Nonnegative final int slot, @Nonnull final GuiInteractable item) {
         if (slot >= inventory.getSize()) return;
         this.interactables.put(slot, item);

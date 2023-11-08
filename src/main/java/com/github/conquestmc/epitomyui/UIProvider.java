@@ -1,5 +1,6 @@
 package com.github.conquestmc.epitomyui;
 
+import com.github.conquestmc.epitomyui.events.CyclingGuiItemStateChangeEvent;
 import com.github.conquestmc.epitomyui.items.GuiInteractable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,6 @@ public class UIProvider implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player player)) return;
-
         uis.remove(player.getUniqueId());
     }
 

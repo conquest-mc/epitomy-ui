@@ -274,6 +274,7 @@ public abstract class ScrollingGui extends GuiBase {
      * @param slot The slot to set the item at
      * @param item The item to set
      */
+    @Override
     public void setItem(@Nonnegative final int slot, @Nonnull final GuiInteractable item) {
         this.setItem(getRow(slot), getColumn(slot), item);
     }

@@ -55,6 +55,8 @@ public abstract class GuiBase implements InventoryHolder {
         }
     }
 
+    public abstract void setItem(@Nonnegative final int slot, @Nonnull final GuiInteractable item);
+
     /**
      * Called when an item in the inventory is clicked.
      *
