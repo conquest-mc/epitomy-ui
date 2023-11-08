@@ -45,6 +45,17 @@ public abstract class GuiBase implements InventoryHolder {
     }
 
     /**
+     * Updates all interactable items in the inventory.
+     */
+    public void update() {
+        for (final Map.Entry<Integer, GuiInteractable> entry : this.interactables.entrySet()) {
+            final int slot = entry.getKey();
+            final ItemStack item = entry.getValue().getItem();
+            this.inventory.setItem(slot, item);
+        }
+    }
+
+    /**
      * Called when an item in the inventory is clicked.
      *
      * @param event The {@link InventoryClickEvent}

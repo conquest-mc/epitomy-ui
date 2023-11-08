@@ -49,7 +49,8 @@ public abstract class ScrollingGui extends GuiBase {
      * Updates the inventory based on the current
      * row and column.
      */
-    public void updateInventory() {
+    @Override
+    public void update() {
         this.interactables.clear();
 
         int contextSlot = -1;
@@ -146,7 +147,7 @@ public abstract class ScrollingGui extends GuiBase {
                 this.interactablesStore.put(slot, item);
             }
         }
-        this.updateInventory();
+        this.update();
     }
 
     /**
@@ -158,7 +159,7 @@ public abstract class ScrollingGui extends GuiBase {
         for (ItemStack[] row : this.items) {
             Arrays.fill(row, item);
         }
-        this.updateInventory();
+        this.update();
     }
 
     /**
@@ -176,7 +177,7 @@ public abstract class ScrollingGui extends GuiBase {
                 items[column] = item.getItem();
             }
         }
-        this.updateInventory();
+        this.update();
     }
 
     /**
@@ -217,22 +218,22 @@ public abstract class ScrollingGui extends GuiBase {
             case UP -> item.onClick(event -> {
                 if (row <= 0) return;
                 this.row--;
-                this.updateInventory();
+                this.update();
             });
             case DOWN -> item.onClick(event -> {
                 if (row >= maxRow) return;
                 this.row++;
-                this.updateInventory();
+                this.update();
             });
             case LEFT -> item.onClick(event -> {
                 if (column <= 0) return;
                 column--;
-                this.updateInventory();
+                this.update();
             });
             case RIGHT -> item.onClick(event -> {
                 if (column >= maxColumn) return;
                 column++;
-                this.updateInventory();
+                this.update();
             });
         }
 
@@ -261,7 +262,7 @@ public abstract class ScrollingGui extends GuiBase {
         try {
             if (slot > 53) throw new IndexOutOfBoundsException("Sticky items must have a slot between 0 and 53");
             this.stickyItems.put(slot, item);
-            this.updateInventory();
+            this.update();
         } catch (IndexOutOfBoundsException e) {
             LOGGER.log(Level.SEVERE, "Could not a stick item to the ScrollingGui", e);
         }
