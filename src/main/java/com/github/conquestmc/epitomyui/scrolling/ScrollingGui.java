@@ -315,6 +315,13 @@ public abstract class ScrollingGui extends GuiBase {
     }
 
     /**
+     * @return The current slot anchored to the top, left of the {@link ScrollingGui}
+     */
+    public int getSlot() {
+        return row * column;
+    }
+
+    /**
      * Gets a slot from the given row and column.
      *
      * @param row The row to get the slot from
@@ -326,6 +333,13 @@ public abstract class ScrollingGui extends GuiBase {
     }
 
     /**
+     * @return The current, top row that is visible in the {@link ScrollingGui}
+     */
+    public int getRow() {
+        return row;
+    }
+
+    /**
      * Gets the row from the given slot.
      *
      * @param slot The slot to get the row from
@@ -333,6 +347,13 @@ public abstract class ScrollingGui extends GuiBase {
      */
     public int getRow(@Nonnegative final int slot) {
         return slot / (this.maxRow + 5);
+    }
+
+    /**
+     * @return The current, left-most column this is visible in the {@link ScrollingGui}
+     */
+    public int getColumn() {
+        return column;
     }
 
     /**
