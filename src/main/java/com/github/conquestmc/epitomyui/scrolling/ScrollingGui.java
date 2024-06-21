@@ -192,6 +192,7 @@ public abstract class ScrollingGui extends GuiBase {
                 row[column] = item;
             }
         }
+        this.update();
     }
 
     /**
