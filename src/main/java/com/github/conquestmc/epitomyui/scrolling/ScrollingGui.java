@@ -3,6 +3,7 @@ package com.github.conquestmc.epitomyui.scrolling;
 import com.github.conquestmc.epitomyui.GuiBase;
 import com.github.conquestmc.epitomyui.items.GuiInteractable;
 import com.github.conquestmc.epitomyui.items.GuiItem;
+import com.github.conquestmc.epitomyui.utils.Logging;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnegative;
@@ -15,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class ScrollingGui extends GuiBase {
-    private static final Logger LOGGER = Logger.getLogger("epitome-ui");
+    private static final Logger LOGGER = Logging.LOGGER;
     private final ItemStack[][] items;
     private final Map<Integer, ScrollHandlerItem> handlers;
     private final Map<Integer, GuiInteractable> interactablesStore;
