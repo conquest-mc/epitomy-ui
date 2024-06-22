@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.github.conquestmc'
-version '0.3'
+version '0.3.4'
 sourceCompatibility = 17
 compileJava.options.encoding = 'UTF-8'
 
